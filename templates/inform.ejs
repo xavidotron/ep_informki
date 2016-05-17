@@ -1,0 +1,107 @@
+<html>
+<head>
+<title><%=path%></title>
+<% include ../../ep_bazki/templates/head.ejs %>
+<%
+var inform = /^(.+\.inform\/)/.exec(path)[1];
+%>
+<script type="text/javascript">
+function showUrl(url) {
+  document.getElementById('storyframe').src = url;
+  document.getElementById('story-h').checked = true;
+}
+
+function tocScroll(id) {
+  document.getElementById('pad').contentDocument
+    .getElementsByTagName('iframe')[0].contentDocument
+    .getElementsByTagName('iframe')[0].contentDocument
+    .getElementById(id).scrollIntoView();
+}
+function lineScroll(line) {
+  document.getElementById('pad').contentDocument
+    .getElementsByTagName('iframe')[0].contentDocument
+    .getElementsByTagName('iframe')[0].contentDocument
+    .querySelector('div:nth-child(' + line + ')').scrollIntoView();  
+}
+
+function indexTo(page) {
+  document.getElementById('indexframe').src
+    = '/g/<%=project%>/wf/<%=inform%>Index/' + page;
+  return false;
+}
+
+function refreshTabs() {
+  var indexframe = document.getElementById('indexframe');
+  if (indexframe) indexframe.contentWindow.location.reload();
+
+  // Apply CSS to tab.
+  document.getElementById('storyframe').contentWindow.document.head.innerHTML
+    += '<style type="text/css">#gameport{left:0px}.interpretercredit { display: none; }</style>';
+}
+</script>
+<style type="text/css">
+.tocBook { margin-left: 5ex; }
+.tocPart { margin-left: 10ex; }
+.tocChapter { margin-left: 15ex; }
+.tocSection { margin-left: 20ex; }
+.belowlinks {
+  position: absolute;
+  top: 20px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.belowlinks iframe {
+  height: 100%;
+  width: 100%;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<%
+locals.no_file_buttons = true;
+locals.extra_buttons = [
+  {name: 'Go!', onclick: "showUrl('/g/"+project+"/compile/"+inform+"')"},
+  {name: 'Release', action: ''},
+];
+%>
+<% include ../../ep_bazki/templates/header.ejs %>
+<div class="stretch">
+<iframe id="pad" src="/p/<%=padid%>?showControls=false&noColors=true"></iframe>
+<div class="wrapper" style="flex: 1">
+<div class="tabber">
+<input id="contents-h" type="radio" name="tabber" checked>
+<label for="contents-h"><span>Contents</span></label>
+<div id="toc">…</div>
+
+<input id="story-h" type="radio" name="tabber">
+<label for="story-h"><span>Story</span></label>
+<div>
+<iframe id="storyframe" onload="refreshTabs()"></iframe>
+</div>
+
+<input id="index-h" type="radio" name="tabber">
+<label for="index-h"><span>Index</span></label>
+<div>
+<a href="index:back" onclick="document.getElementById('indexframe').contentWindow.history.back();return false">&lt;</a> |
+<a href="index:forward" onclick="document.getElementById('indexframe').contentWindow.history.forward();return false">&gt;</a> |
+<a href="index:Home" onclick="return indexTo('Welcome.html')">Home</a> |
+<a href="index:Contents" onclick="return indexTo('Contents.html')">Contents</a> |
+<a href="index:Actions" onclick="return indexTo('Actions.html')">Actions</a> |
+<a href="index:Kinds" onclick="return indexTo('Kinds.html')">Kinds</a> |
+<a href="index:Phrasebook" onclick="return indexTo('Phrasebook.html')">Phrasebook</a> |
+<a href="index:Rules" onclick="return indexTo('Rules.html')">Rules</a> |
+<a href="index:Scenes" onclick="return indexTo('Scenes.html')">Scenes</a> |
+<a href="index:World" onclick="return indexTo('World.html')">World</a>
+<div class="belowlinks">
+<iframe id="indexframe" src="/g/<%=project%>/wf/<%=inform%>Index/Welcome.html"></iframe>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

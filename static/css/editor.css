@@ -1,0 +1,51 @@
+.string {
+    color: darkcyan;
+    font-weight: normal !important;
+    font-style: normal !important;
+}
+.quotemark:not(.string), .startquote .quotemark:not(.string) ~ *, .contquote > *, .endquote .beforequotemark {
+    color: darkmagenta;
+    font-weight: normal !important;
+    font-style: normal !important;
+}
+
+.section {
+    font-weight: bold;
+    font-size: larger;
+}
+.bracketed {
+    font-size: smaller;
+    color: darkgreen;
+}
+.string.bracketed {
+    font-size: inherit;
+    color: mediumpurple;
+}
+
+.keyword {
+  font-weight: bold;
+}
+.bracketed.keyword {
+  font-weight: normal;
+}
+
+.tablestart {
+  font-size: larger;
+}
+.table {
+  background: #EEFFFF;
+}
+.table span:not(.tab) {
+  background: #DDFFFF;
+}
+
+.err {
+  background: #FFBBCC;
+}
+
+/* etherpad-lite has a seemingly-unnecessary hack that applies .noprewrap;
+   we need tabs to be visible in tables */
+.noprewrap {
+    white-space: pre-wrap;
+    tab-size: 8;
+}

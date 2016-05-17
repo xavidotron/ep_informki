@@ -1,0 +1,18 @@
+{
+  "parts": [
+    {
+      "name": "main",
+      "pre": ["ep_bazki/main"],
+      "hooks": {
+        "expressCreateServer": "ep_informki/index"
+      },
+      "client_hooks": {
+        "aceEditorCSS": "ep_informki/static/js/highlight",
+        "aceGetFilterStack": "ep_informki/static/js/highlight",
+        "aceEditEvent": "ep_informki/static/js/highlight",
+        "acePostWriteDomLineHTML": "ep_informki/static/js/highlight",
+        "aceKeyEvent": "ep_informki/static/js/highlight"
+      }
+    }
+  ]
+}
