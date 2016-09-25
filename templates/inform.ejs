@@ -11,6 +11,32 @@ function showUrl(url) {
   document.getElementById('story-h').checked = true;
 }
 
+var idle = true;
+var pendingCompile = false;
+function compileWhenSaved() {
+  if (idle) {
+    showUrl('/g/<%=project%>/compile/<%=inform%>');
+  } else {
+    pendingCompile = true;
+  }
+}
+
+function onInternalAction(newState) {
+  if (newState == "commitAcceptedByServer") {
+    idle = true;
+    if (pendingCompile) {
+      showUrl('/g/<%=project%>/compile/<%=inform%>');
+      pendingCompile = false;
+    }
+  } else {
+    idle = false;
+  }
+}
+
+function onDocumentReady(pad) {
+  pad.collabClient.setOnInternalAction(onInternalAction);
+}
+
 function tocScroll(id) {
   document.getElementById('pad').contentDocument
     .getElementsByTagName('iframe')[0].contentDocument
@@ -62,7 +88,7 @@ function refreshTabs() {
 <%
 locals.no_file_buttons = true;
 locals.extra_buttons = [
-  {name: 'Go!', onclick: "showUrl('/g/"+project+"/compile/"+inform+"')"},
+  {name: 'Go!', onclick: "compileWhenSaved()"},
   {name: 'Release', action: ''},
 ];
 %>

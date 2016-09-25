@@ -11,7 +11,8 @@
         "aceGetFilterStack": "ep_informki/static/js/highlight",
         "aceEditEvent": "ep_informki/static/js/highlight",
         "acePostWriteDomLineHTML": "ep_informki/static/js/highlight",
-        "aceKeyEvent": "ep_informki/static/js/highlight"
+        "aceKeyEvent": "ep_informki/static/js/highlight",
+        "postAceInit": "ep_informki/static/js/client"
       }
     }
   ]
