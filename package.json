@@ -7,6 +7,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Xavid",
-  "license": "Apache 2.0",
-  "dependencies": {"ep_bazki": ">=0.0.0"}
+  "license": "Apache 2.0"
 }
