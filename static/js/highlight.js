@@ -201,9 +201,10 @@ exports.aceEditEvent = function (hook_name, context) {
           touched_set[line.id] = true;
           var orig_class = line.className;
           highlightLine(line, true);
-          if (orig_class == line.className) {
+          if (orig_class == line.className && line != edited_lines[i]) {
             // If we didn't change the line's class, it won't impact future
-            // lines.
+            // lines. This doesn't apply for the first line, because edited
+            // lines are reset.
             break;
           }
           line = line.nextElementSibling;
