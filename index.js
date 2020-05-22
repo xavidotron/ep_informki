@@ -45,15 +45,32 @@ exports.expressCreateServer = function (hook_name, context, cb) {
         i7.stdout.on('data', writeData);
         i7.stderr.on('data', writeData);
         i7.on('exit', function (code, signal) {
-          done = true;
           if (code || signal) {
+            done = true;
             res.end('</pre><h2>Exited with '+ (code || signal)
                     + '</h2></body></html>');
           } else {
             var mod = path.replace('.inform', '.materials');
-            res.end('</pre><script type="text/javascript">location.href = "/g/'
-                    + project + '/w/' + mod
-                    + 'Release/play.html";</script></body></html>');
+            var blorbtool = spawn('/usr/bin/python', [
+              'blorbtool.py',
+              path + '/Build/output.gblorb',
+              'giload',
+              mod + '/Release/interpreter',
+            'interpreter'],
+                                  {'cwd': workdir.get_path(project)});
+            blorbtool.stdout.on('data', writeData);
+            blorbtool.stderr.on('data', writeData);
+            blorbtool.on('exit', function (code, signal) {
+              done = true;
+              if (code || signal) {
+                res.end('</pre><h2>blorbtool exited with '+ (code || signal)
+                        + '</h2></body></html>');
+              } else {
+                res.end('</pre><script type="text/javascript">location.href = "/g/'
+                        + project + '/w/' + mod
+                        + 'Release/play.html";</script></body></html>');
+              }
+            });
           }
         });
       });
